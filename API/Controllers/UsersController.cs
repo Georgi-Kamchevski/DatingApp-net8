@@ -7,6 +7,7 @@ using API.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace API.Controllers;
 
@@ -55,6 +56,7 @@ public class UsersController(IUserRepository userRepository,IMapper mapper,IPhot
             Url=result.SecureUrl.AbsoluteUri,
             PublicId=result.PublicId
         };
+        if(user.Photos.Count == 0) photo.IsMain=true;
         user.Photos.Add(photo);
         
         if(await userRepository.SaveAllAsync()) 
