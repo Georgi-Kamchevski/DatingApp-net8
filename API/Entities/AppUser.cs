@@ -15,9 +15,9 @@ public class AppUser
 
     public required string KnownAs { get; set; }
 
-    public DateTime Created { get; set; }=DateTime.UtcNow;
+    public DateTime Created { get; set; }=DateTime.UtcNow.ToLocalTime();
 
-    public DateTime LastActive { get; set; }=DateTime.UtcNow;
+    public DateTime LastActive { get; set; }=DateTime.UtcNow.ToLocalTime();
 
     public required string Gender { get; set; }
 
