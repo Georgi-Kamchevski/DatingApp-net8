@@ -2,7 +2,7 @@
 
 namespace API.Extensions;
 
-public static class ClaimsPrincipleExtensions
+public static class ClaimsPrincipalExtensions
 {
     public static string GetUsername(this ClaimsPrincipal user){
         var username = user.FindFirstValue(ClaimTypes.Name) ?? throw new Exception("Cannot get username from token");
