@@ -42,7 +42,7 @@ public class UsersController(IUserRepository userRepository,IMapper mapper,IPhot
         if(username == null) return BadRequest("No username found in token.");
         var user = await userRepository.GetUserByUsernameAsync(username);
 
-        if(user ==null) return BadRequest("Could not find user.");
+        if(user == null) return BadRequest("Could not find user.");
 
         mapper.Map(memberUpdateDto,user);
 
