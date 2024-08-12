@@ -27,7 +27,7 @@ public class UsersController(IUserRepository userRepository,IMapper mapper,IPhot
         return Ok(users);
     }
 
-    
+   
     [HttpGet("{username}")] // /api/users/polly
     public async Task<ActionResult<MemberDto>> GetUser(string username){
         var user= await userRepository.GetMemberAsync(username);
@@ -40,7 +40,7 @@ public class UsersController(IUserRepository userRepository,IMapper mapper,IPhot
     public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto){
         var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if(username == null) return BadRequest("No username found in token.");
-        var user = await userRepository.GetUserByUsernameAsync(username);
+        var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
 
         if(user == null) return BadRequest("Could not find user.");
 
