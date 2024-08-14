@@ -19,7 +19,7 @@ public class LogUserActivity : IAsyncActionFilter
 
         if(user==null) return;
 
-        user.LastActive=DateTime.UtcNow.ToLocalTime();
+        user.LastActive=DateTime.UtcNow;
         await repo.SaveAllAsync();
 
     }

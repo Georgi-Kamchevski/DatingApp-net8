@@ -10,9 +10,9 @@ public class AppUser : IdentityUser<int>
 
     public required string KnownAs { get; set; }
 
-    public DateTime Created { get; set; }=DateTime.UtcNow.ToLocalTime();
+    public DateTime Created { get; set; }=DateTime.UtcNow;
 
-    public DateTime LastActive { get; set; }=DateTime.UtcNow.ToLocalTime();
+    public DateTime LastActive { get; set; }=DateTime.UtcNow;
 
     public required string Gender { get; set; }
 

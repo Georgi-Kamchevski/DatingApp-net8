@@ -30,7 +30,7 @@ public class TokenService(IConfiguration config, UserManager<AppUser> userManage
         var creds=new SigningCredentials(key,SecurityAlgorithms.HmacSha512Signature);
         var tokenDescriptor = new SecurityTokenDescriptor{
             Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.ToLocalTime().AddDays(7),
+            Expires = DateTime.UtcNow.AddDays(7),
             SigningCredentials = creds
         };
 
