@@ -31,11 +31,15 @@ public class UserRepository(DataContext context,IMapper mapper) : IUserRepositor
         context.Entry(user).State=EntityState.Modified;
     }
 
-    public async Task<MemberDto?> GetMemberAsync(string username)
+    public async Task<MemberDto?> GetMemberAsync(string username, bool isCurrentUser)
     {
-        return await context.Users.Where(x=>x.UserName==username)
+        var query = context.Users.Where(x=>x.UserName==username)
         .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
-        .SingleOrDefaultAsync();
+        .AsQueryable();
+
+        if(isCurrentUser) query = query.IgnoreQueryFilters();
+
+        return await query.FirstOrDefaultAsync(); 
     }
 
     public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
@@ -58,5 +62,14 @@ public class UserRepository(DataContext context,IMapper mapper) : IUserRepositor
 
 
         return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(mapper.ConfigurationProvider),userParams.PageNumber,userParams.PageSize);
+    }
+
+    public async Task<AppUser?> GetUserByPhotoId(int photoId)
+    {
+       return await context.Users
+       .Include(p=>p.Photos)
+       .IgnoreQueryFilters()
+       .Where(p=>p.Photos.Any(p=>p.Id==photoId))
+       .FirstOrDefaultAsync();
     }
 }
